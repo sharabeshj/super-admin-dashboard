@@ -4,11 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 import LockOutline from '@material-ui/icons/LockOutline';
-import People from '@material-ui/icons/People';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 
 import Card from '../components/Card/Card';
 import CardBody from '../components/Card/Cardbody';
@@ -27,14 +24,14 @@ class SignIn extends React.Component{
             cardAnimation : "cardHidden"
         }
     }
-    componentDidMount(){
-        setTimeout(
-            function(){
-                this.setState({ cardAnimtion : "" });
-            }.bind(this),
-            700
-        );
-    }
+    // componentDidMount(){
+    //     setTimeout(
+    //         function(){
+    //             this.setState({ cardAnimtion : "" });
+    //         }.bind(this),
+    //         700
+    //     );
+    // }
     handleUserEmailChange = e =>{
         this.setState({ email : e.target.value });
     }
@@ -42,12 +39,12 @@ class SignIn extends React.Component{
         this.setState({ password : e.target.value });
     }
     render(){
-        const { classes,...rest } = this.props;
+        const { classes } = this.props;
         return (
             <div className = { classes.container }>
                 <Grid container justify = "center">
                     <Grid item xs = {12} sm =  {12} md = {4}>
-                        <Card className = { classes[this.state.cardAnimation]}>
+                        <Card >
                             <form className = { classes.form }>
                                 <CardHeader color = "primary" className = { classes.cardHeader }>
                                     <h4>Login</h4>
