@@ -19,7 +19,8 @@ function CustomInput({ ...props }) {
     error,
     white,
     inputRootCustomClasses,
-    success
+    success,
+    controlFunc
   } = props;
 
   const labelClasses = classNames({
@@ -66,6 +67,7 @@ function CustomInput({ ...props }) {
           disabled: classes.disabled,
           underline: underlineClasses
         }}
+        onChange = {controlFunc}
         id={id}
         {...inputProps}
       />
@@ -88,7 +90,8 @@ CustomInput.propTypes = {
   inputRootCustomClasses: PropTypes.string,
   error: PropTypes.bool,
   success: PropTypes.bool,
-  white: PropTypes.bool
+  white: PropTypes.bool,
+  controlFunc : PropTypes.func.isRequired
 };
 
 export default withStyles(customInputStyle)(CustomInput);

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Aux from './hoc/Aux';
+import Auxillary from './hoc/Auxillary';
 import Main from './container/Main';
 
 class App extends Component {
   render() {
     return (
-      <Aux>
+      <Auxillary>
         <Main />
-      </Aux>
+      </Auxillary>
     );
   }
 }
