@@ -1,12 +1,12 @@
-import { createStore, applyMiddleware } from 'react-redux';
-import {thunkMiddleware} from 'redux-thunk';
-import { createStore } from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
 
 import rootReducer from './Reducers/reducers';
 
 const loggerMiddeware = createLogger();
 
-const configureStore = (state) => {
+const ConfigureStore = (state) => {
     return createStore(
         rootReducer,
         state,
@@ -17,4 +17,4 @@ const configureStore = (state) => {
     )
 }
 
-export default configureStore;
+export default ConfigureStore;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
@@ -8,6 +8,7 @@ import LockOutline from '@material-ui/icons/LockOutline';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
+import {loginHandler} from '../Store/Actions/ActionCreator';
 import Card from '../components/Card/Card';
 import CardBody from '../components/Card/Cardbody';
 import CardHeader from '../components/Card/CardHeader';
@@ -46,8 +47,10 @@ class SignIn extends React.Component{
             email : this.state.email,
             password : this.state.password
         };
-        axios.post('/login',payLoad)
-            .then(res => console.log(res))
+        this.props.loginHandler(payLoad)
+    }
+    componentDidUpdate(){
+        if(this.props.authenticated === false) this.props.history.replace('/dashboard');
     }
     render(){
         const { classes } = this.props;
@@ -114,4 +117,15 @@ SignIn.propTypes = {
     classes : PropTypes.object.isRequied,
 };
 
-export default withStyles(loginPageStyle)(SignIn);
+const mapStateToProps = state => {
+    return {
+        authenticated : state.log.authenticated
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        loginHandler : data => dispatch(loginHandler(data))
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(loginPageStyle)(SignIn));

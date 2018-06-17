@@ -1,5 +1,6 @@
 from flask import Blueprint,request,jsonify,session
 from project import db,token_required
+from werkzeug.security import generate_password_hash
 from project.models import User,Fyle_Tokens
 import jwt
 import datetime
@@ -22,4 +23,11 @@ def new_login():
 @token_required
 def create_password(current_user):
     req_data = request.get_json()
-    user = User.query
+    user = User.query.filter_by(id = current_user.id).first()
+    
+    hashed_password = generate_password_hash(req_data['password'],method='sha256')
+
+    user.password_hash = hashed_password
+    db.session.commit()
+
+    return jsonify({ 'message' : 'password created'})
