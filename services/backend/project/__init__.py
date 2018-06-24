@@ -1,14 +1,31 @@
 from flask import Flask,jsonify,request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from .models import User
+from project.api.models import User
 from functools import wraps
 import jwt
+import os
 
-app = Flask(__name__,instance_relative_config=True)
-app.config.from_pyfile('flask.cfg')
-db = SQLAlchemy(app)
-migrate = Migrate(app,db)
+
+db = SQLAlchemy()
+# migrate = Migrate(app,db)
+
+def create_app(script_info=None):
+
+    #instantiate the app
+    app = Flask(__name__)
+
+    #set config
+    app_settings = os.getenv('APP_SETTINGS')
+    app.config.from_object(app_settings)
+
+    #set up extensions
+    from project.api.users import users_blueprint
+    app.register_blueprint(users_blueprint)
+
+    #shell context for flask cli
+    app.shell_context_processor({ 'app' : app, 'db' : db })
+    return app
 
 def token_required(f):
     @wraps(f)
@@ -30,8 +47,6 @@ def token_required(f):
 
 
 from . import views
-from project.users.views import users_blueprint
 
-app.register_blueprint(users_blueprint)
 
 from project import models

@@ -1,4 +1,4 @@
-from . import db
+from project import db
 from sqlalchemy.dialects.postgresql import JSON
 
 class User(db.Model):
